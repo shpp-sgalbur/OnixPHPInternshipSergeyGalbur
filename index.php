@@ -14,6 +14,7 @@ echo $user1->getProp('name')." дал ".$user2->getProp('name')." 50 грн.<br>
 $user1->giveMoney(50,$user2);
 $user1->printStatus();
 $user2->printStatus();
+
 echo '<br>';
 echo $user1->getProp('name')." должен ".$user2->getProp('name')." еще 100грн. грн.<br><br>";
 $user1->giveMoney(100,$user2);
