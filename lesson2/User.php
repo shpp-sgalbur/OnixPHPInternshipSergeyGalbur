@@ -1,5 +1,5 @@
 <?php
-namespace OnixPHPInternshipSergeyGalbur;
+namespace lesson2;
 
 /**
  * Description of User
@@ -23,7 +23,7 @@ class User {
         return $this->balance;
     }
 
-    public function printStatus() {
+    public function __toString() {
         echo "У пользователя $this->name  сейчас на счету $this->balance грн.<br>";
     }
     
