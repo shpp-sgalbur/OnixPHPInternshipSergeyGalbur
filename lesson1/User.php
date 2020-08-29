@@ -24,7 +24,7 @@ class User {
     }
 
     public function printStatus() {
-        echo "У пользователя $this->name  сейчас на счету $this->balance грн.<br>";
+        return "У пользователя $this->name  сейчас на счету $this->balance грн.<br>";
     }
     
     public function giveMoney($amount, $user) {
