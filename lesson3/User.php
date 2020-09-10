@@ -33,23 +33,17 @@ class User {
     }
     
     public function sellProduct (Product $prod,User $user) {
-        
-        if($prod->getOwner()->name == $this->name){
-            $price = $prod->getPrice();
-            if($user->balance >= $price){
-                $user->balance -= $price;
-                $this->balance += $price;
-
+        $msg = '';
+        if($prod->getOwner() == $this){
+            $price = $prod->getPrice();            
+            if($user->giveMoney($price, $this) == "Операция выполнена."){
                 $this->delProduct($prod);
                 $prod->setOwner($user);
-                $msg = "Пользователь $this->name продал продукт {$prod->getName()} по цене $price пользователю $user->name"."\n";
-            }else{
-                $msg = "Пользователь $user->name не может перечислить $price пользователю $this->name, так как имеет только $user->balance";
+                $msg = "Пользователь $this->name продал продукт {$prod->getName()} по цене $price пользователю $user->name"."\n";            
             }
         }else{
             $msg = "Продукт ".  $prod->__toString(). "не принадлежит пользователю $this->name. Сделка новозможна!!!";
-        }
-        
+        }        
         return $msg;
     }
     
@@ -72,20 +66,19 @@ class User {
     }
     
     public function giveMoney($amount, $user) {
-        if($this->balance > $amount){
+        if($this->balance >= $amount){
             $this->balance -= $amount;
-            $user->takeMoney($amount);
+            $user->balance += $amount;
+            $msg = "Операция выполнена.";  
         }else{
-            $this->balance = 0;
-            $user->takeMoney($this->balance);
-            
+            $msg = "Пользователь $this->name не может перечислить $amount пользователю $user->name, так как имеет только $this->balance";            
         }
+        echo $msg;
+        return $msg;
         
     }
     
-    private function takeMoney($amount){
-        $this->balance += $amount;
-    }
+
     
     public function getProp($prop) {
         return $this->$prop;
